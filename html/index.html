@@ -572,7 +572,7 @@
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="lineChart-container" style="height: 400px">
-                          <canvas style="height: 300px; width: 300px;" id="tempChart"></canvas>
+                          <canvas style="height: 350px; width: 100%;" id="tempChart"></canvas>
                         </div>
                         <!-- <div id="orderStatisticsChart"></div> -->
                       </div>
@@ -596,7 +596,7 @@
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex flex-column align-items-center gap-1">
                           <div class="lineChart-container">
-                            <canvas style="height: 300px; width: 300px;" id="humidChart"></canvas>
+                            <canvas style="height: 350px; width: 100%;" id="humidChart"></canvas>
                           </div>
                         </div>
                         
@@ -681,7 +681,7 @@
         let temp_chart
         let hum_chart
 
-        let source = new EventSource("http://127.0.0.1:3000/");
+        let source = new EventSource("http://10.90.0.42:3000/");
         source.onmessage = function(event) {
           let data = JSON.parse(event.data)
 
