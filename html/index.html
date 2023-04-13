@@ -15,7 +15,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Smart Farming</title>
 
     <meta name="description" content="" />
 
@@ -621,14 +621,26 @@
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         
-                        <div class="col-md-8">
+                        <!-- <div class="col-md-8"> -->
                           <!-- <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5> -->
                           <!-- <div id="totalRevenueChart" class="px-2"></div> -->
                           <div id="growthChart"></div>
-                        </div>
+                        <!-- </div> -->
                       </div>
                       
+                      <div class="slidecontainer" style="width:100%">
+                        <input type="range" min="0" max="100" value="50" class="slider" id="myRange" oninput="rangeValue.innerText = this.value" style="appearance: none;
+                        width: 100%; /* Full-width */
+                        height: 5px; /* Specified height */
+                        background: #d3d3d3; /* Grey background */
+                        outline: none; /* Remove outline */
+                        opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+                        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+                        transition: opacity .2s;">
+                        <p style="text-align:center;"id="rangeValue">50</p>
+                      </div>
                       
+                      <button onclick="setThreshold()" class="btn btn-sm btn-outline-primary">Set Threshold</button>
                     </div>
                   </div>
                 </div>
@@ -801,9 +813,19 @@
       }
     });
         }
-     
-
-      
+    console.log(document.getElementById('myRange').value)
+   
+    
+    function setThreshold(){
+      let threshold = (document.getElementById('myRange').value * 10.24 )
+      console.log(threshold)
+      fetch(`http://10.90.0.42:3000/set_threshold?threshold=${threshold}`)
+        .then((res) => res.text())
+        .then((data)=>console.log(data))
+        .catch((err) => {
+           console.log(err.message);
+        })
+    }
     
     
     </script>
