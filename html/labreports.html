@@ -173,10 +173,10 @@
                           <p class="mb-4">
                             <!-- You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
                             your profile. -->
-                            Here is your Crop Recommendation :
+                           Request for Lab Reports of your Soil
                           </p>
 
-                          <button onclick="getSuggestion()" class="btn btn-sm btn-outline-primary">Recommend</button>
+                          <button onclick="getSuggestion()" class="btn btn-sm btn-outline-primary">Get Reports</button>
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">
@@ -208,14 +208,10 @@
                             <img class="card-img card-img-left" style="width:100%; height:100%" src="../assets/img/elements/pH.png" alt="Card image" />
                           </div>
                           <div class="col-md-8">
-                            <div class="card-body">
+                            <div class="card-body" style="margin-left:15vw;">
                               <h5 class="card-title">pH Value</h5>
-                              <p class="card-text">
-                                This is a wider card with supporting text below as a natural lead-in to additional content. This content
-                                is a
-                                little bit longer.
+                              <p class="card-text" id="pHvalue" style="font-size:50px">
                               </p>
-                              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                           </div>
                         </div>
@@ -227,12 +223,9 @@
                           <div class="col-md-8">
                             <div class="card-body">
                               <h5 class="card-title">Nitrogen</h5>
-                              <p class="card-text">
-                                This is a wider card with supporting text below as a natural lead-in to additional content. This content
-                                is a
-                                little bit longer.
+                              <p class="card-text" id="Nvalue" style="font-size:50px">
+                                
                               </p>
-                              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                           </div>
                           <div class="col-md-4">
@@ -251,14 +244,12 @@
                             <img class="card-img card-img-left" src="../assets/img/elements/P.png" alt="Card image" />
                           </div>
                           <div class="col-md-8">
-                            <div class="card-body">
+                            <div class="card-body" style="margin-left:15vw;">
                               <h5 class="card-title">Phosphorus</h5>
-                              <p class="card-text">
-                                This is a wider card with supporting text below as a natural lead-in to additional content. This content
-                                is a
-                                little bit longer.
+                              <p class="card-text" id="Pvalue" style="font-size:50px">
+                                
                               </p>
-                              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                              
                             </div>
                           </div>
                         </div>
@@ -270,12 +261,8 @@
                           <div class="col-md-8">
                             <div class="card-body">
                               <h5 class="card-title">Potassium</h5>
-                              <p class="card-text">
-                                This is a wider card with supporting text below as a natural lead-in to additional content. This content
-                                is a
-                                little bit longer.
+                              <p class="card-text" id="Kvalue" style="font-size:50px">
                               </p>
-                              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                           </div>
                           <div class="col-md-4">
@@ -316,27 +303,40 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <!-- <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script> -->
 
     <!-- Main JS -->
     <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="../assets/js/dashboards-analytics.js"></script>
+    <!-- <script src="../assets/js/dashboards-analytics.js"></script> -->
 
     
 
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
+
     <script>
-      function getSuggestion(){
-        fetch("http://10.90.0.42:3000/get_suggestion")
-        .then((res) => res.json())
-        .then((data)=>console.log(data))
-        .catch((err) => {
-        console.log(err.message);
-        })
-      }
+      let report
+      let email = "shar@mik.com"
+      fetch(`https://super-rugby-shirt-eel.cyclic.app/farm/getNPKpH?email=${email}`)
+      .then((res) => res.json())
+      .then((data)=> {
+        console.log(data)
+        document.getElementById('Nvalue').innerHTML = data.Nitrogen;
+        document.getElementById('pHvalue').innerHTML = data.pH;
+        document.getElementById('Kvalue').innerHTML = data.Potassium;
+        document.getElementById('Pvalue').innerHTML = data.Phosphorus;
+        
+      })
+      //.then((resdata)=> {report = resdata.Nitrogen})
+       // document.getElementById('Nvalue').innerHTML = report.Nitrogen;})
+      //.then((data)=>console.log(data))
+      .catch((err) => {
+      console.log(err.message);
+      })   
+      console.log(report)
     </script>
+    
   </body>
 </html>

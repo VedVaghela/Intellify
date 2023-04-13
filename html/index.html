@@ -477,11 +477,11 @@
                       <div class="col-sm-7">
                         <div class="card-body">
                           <h5 class="card-title text-primary">Welcome Smart Farmer !</h5>
-                          <p class="mb-4 fw-bold">
+                          <p class="mb-4">
                             Check out how your Farm is doing !!
                           </p>
-
-                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">RANDOM BUTTON BOOM</a>
+                          <h3 class="fw-bold" id="suggestedCrop"></h3>
+                          <button onclick="getSuggestion()" class="btn btn-sm btn-outline-primary">Get Recommendation</button>
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">
@@ -683,11 +683,21 @@
     <!-- Line Chart JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- <script>
+    <script>
 
-       
-    
-    </script> -->
+      let Recommended_crop
+
+      function getSuggestion(){
+        fetch("http://10.90.0.42:3000/get_suggestion")
+        .then((res) => res.json())
+        .then((resdata)=> {Recommended_crop = resdata.result
+          document.getElementById('suggestedCrop').innerHTML = Recommended_crop;})
+        .then((data)=>console.log(data))
+        .catch((err) => {
+        console.log(err.message);
+        })        
+      }
+    </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
