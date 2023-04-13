@@ -673,6 +673,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+
+      if(typeof(EventSource) !== "undefined") {
+        var source = new EventSource("http://127.0.0.1:3000/");
+        source.onmessage = function(event) {
+          console.log(event);
+          //document.getElementById("result").innerHTML += event.data + "<br>";
+        };
+      } 
+      else {
+        //document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+      }
+     
+
       const tempctx = document.getElementById('tempChart');
       const humctx = document.getElementById('humidChart');
     
