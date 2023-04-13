@@ -674,28 +674,52 @@
 
     <script>
 
-      if(typeof(EventSource) !== "undefined") {
-        var source = new EventSource("http://127.0.0.1:3000/");
-        source.onmessage = function(event) {
-          console.log(event);
-          //document.getElementById("result").innerHTML += event.data + "<br>";
-        };
-      } 
-      else {
-        //document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
-      }
-     
+        let temp=[]
+        let hum=[]
+        let time=[]
 
-      const tempctx = document.getElementById('tempChart');
-      const humctx = document.getElementById('humidChart');
-    
-    new Chart(tempctx, {
+        let temp_chart
+        let hum_chart
+
+        let source = new EventSource("http://127.0.0.1:3000/");
+        source.onmessage = function(event) {
+          let data = JSON.parse(event.data)
+
+          temp.push(data.temp)
+          hum.push(data.hum)
+          time.push(new Date().toLocaleTimeString('en-GB', { hour: "numeric", minute: "numeric",second:"numeric"}))
+
+
+          if(temp.length > 10){
+            temp = temp.slice(-10)
+          }
+          if(hum.length > 10){
+            hum = hum.slice(-10)
+          }
+          if(time.length > 10){
+            time = time.slice(-10)
+          }
+
+          console.log(temp)
+          console.log(hum)
+
+          const tempctx = document.getElementById('tempChart');
+          const humctx = document.getElementById('humidChart');
+
+          if(temp_chart != undefined){
+            temp_chart.destroy()
+          }
+          if(hum_chart != undefined){
+            hum_chart.destroy()
+          }
+
+          temp_chart = new Chart(tempctx, {
       type: 'line',
       data: {
-        labels: [1,2,3,4,5,6,7],
+        labels: time,
         datasets: [{
           label: 'Temperature',
-          data: [12, 19, 3, 5, 2, 3,34,23,11,33,3],
+          data: temp,
           borderWidth: 1
         }]
       },
@@ -719,6 +743,14 @@
                 unit :'minute'
               }
             },
+            xAxes: [{
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 90
+                }
+            }]
+
             
           }
         }
@@ -726,13 +758,13 @@
       }
     });
 
-    new Chart(humctx, {
+    hum_chart = new Chart(humctx, {
       type: 'line',
       data: {
-        labels: [1,2,3,4,5,6,7,8,9,10],
+        labels: time,
         datasets: [{
           label: 'Humidity',
-          data: [12, 19, 3, 15, 21, 3,12,23,1,3],
+          data: hum,
           borderWidth: 1
         }]
       },
@@ -754,12 +786,26 @@
                 unit :'minute'
               }
             },
+            xAxes: [{
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 90
+                }
+            }]
+
             
           }
         }
         
       }
     });
+        }
+     
+
+      
+    
+    
     </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
