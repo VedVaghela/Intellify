@@ -229,7 +229,7 @@ console.log(document.getElementById('myRange').value)
 
 
 function setThreshold(){
-let threshold = (document.getElementById('myRange').value * 10.24 )
+let threshold = 100 - (document.getElementById('myRange').value * 10.24 )
 console.log(threshold)
 fetch(`http://10.90.0.42:3000/set_threshold?threshold=${threshold}`)
 .then((res) => res.text())
