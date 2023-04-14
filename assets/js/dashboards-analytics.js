@@ -13,7 +13,7 @@ let source = new EventSource("http://10.90.0.42:3000/");
 source.onmessage = function(event) {
   let data = JSON.parse(event.data)
   // console.log(data.soil)
-  soil_moisture = Math.round((data.soil/1024)*100)
+  soil_moisture = 100 - Math.round((data.soil/1024)*100)
   // console.log(soil_moisture);
   temp.push(data.temp)
   hum.push(data.hum)
@@ -143,7 +143,7 @@ let cardColor, headingColor, axisColor, shadeColor, borderColor;
   // --------------------------------------------------------------------
   const growthChartEl = document.querySelector('#growthChart'),
     growthChartOptions = {
-      series: [100 - soil_moisture],
+      series: [soil_moisture],
       labels: ['Soil Moisture'],
       chart: {
         height: 270,
