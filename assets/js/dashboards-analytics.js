@@ -143,7 +143,7 @@ let cardColor, headingColor, axisColor, shadeColor, borderColor;
   // --------------------------------------------------------------------
   const growthChartEl = document.querySelector('#growthChart'),
     growthChartOptions = {
-      series: [soil_moisture],
+      series: [100 - soil_moisture],
       labels: ['Soil Moisture'],
       chart: {
         height: 270,
@@ -229,7 +229,7 @@ console.log(document.getElementById('myRange').value)
 
 
 function setThreshold(){
-let threshold = 100 - (document.getElementById('myRange').value * 10.24 )
+let threshold = (document.getElementById('myRange').value * 10.24 )
 console.log(threshold)
 fetch(`http://10.90.0.42:3000/set_threshold?threshold=${threshold}`)
 .then((res) => res.text())
