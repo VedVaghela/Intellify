@@ -175,8 +175,8 @@
                             your profile. -->
                            Request for Lab Reports of your Soil
                           </p>
-
-                          <button onclick="getSuggestion()" class="btn btn-sm btn-outline-primary">Get Reports</button>
+                          <p id="requested"></p>
+                          <button onclick="requestReport()" class="btn btn-sm btn-outline-primary">Get Reports</button>
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">
@@ -318,7 +318,7 @@
 
     <script>
       let report
-      let email = "shar@mik.com"
+      let email = localStorage.getItem("email")
       fetch(`https://super-rugby-shirt-eel.cyclic.app/farm/getNPKpH?email=${email}`)
       .then((res) => res.json())
       .then((data)=> {
@@ -336,6 +336,27 @@
       console.log(err.message);
       })   
       console.log(report)
+      let token = localStorage.getItem("access_token")
+
+      function requestReport(){
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+
+        fetch("https://super-rugby-shirt-eel.cyclic.app/farm/requestReport", requestOptions)
+         .then(response => response.json())
+         .then(result => {console.log(result)
+        alert("LAB REPORT REQUESTED")
+        document.getElementById('requested').innerHTML = "Request for Lab Report Sent !"})
+         .catch(error => console.log('error', error));
+      }
     </script>
     
   </body>
